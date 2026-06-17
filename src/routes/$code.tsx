@@ -101,7 +101,7 @@ function Certificate({ cert }: { cert: Certificate }) {
                   <img src={entrupyLogo.url} alt="entrupy" className="h-20 object-contain" />
                   <h1
                     className="text-center text-[34px] tracking-tight"
-                    style={{ fontFamily: "'Times New Roman', Georgia, serif", fontWeight: 400, letterSpacing: "0.04em" }}
+                    style={{ fontFamily: "'Oswald', 'Helvetica Neue', Arial, sans-serif", fontWeight: 700, letterSpacing: "0.01em" }}
                   >
                     CERTIFICATE OF AUTHENTICITY
                   </h1>
