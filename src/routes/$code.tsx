@@ -213,18 +213,20 @@ function Certificate({ cert }: { cert: Certificate }) {
 
 
         {/* Footer actions */}
-        <div className="mt-6 flex flex-wrap justify-center gap-3 pb-8">
-          <button
-            onClick={() => window.print()}
-            className="rounded-full border-2 border-black bg-black px-8 py-3 text-sm font-bold text-white transition-colors hover:bg-transparent hover:text-black"
-          >PRINT</button>
-          <button
-            onClick={() => setShareOpen(true)}
-            className="rounded-full border-2 border-black bg-black px-8 py-3 text-sm font-bold text-white transition-colors hover:bg-transparent hover:text-black"
-          >SHARE</button>
+        <div className="mt-6 flex flex-col gap-3 pb-8 md:flex-row md:flex-wrap md:justify-center">
+          <div className="grid grid-cols-2 gap-3 md:contents">
+            <button
+              onClick={() => window.print()}
+              className="rounded-full border-2 border-black bg-black px-8 py-3 text-sm font-bold text-white transition-colors hover:bg-transparent hover:text-black"
+            >PRINT</button>
+            <button
+              onClick={() => setShareOpen(true)}
+              className="rounded-full border-2 border-black bg-black px-8 py-3 text-sm font-bold text-white transition-colors hover:bg-transparent hover:text-black"
+            >SHARE</button>
+          </div>
           <button
             onClick={() => setProtectOpen(true)}
-            className="rounded-full border-2 border-[#daa520] bg-[#daa520] px-8 py-3 text-sm font-bold text-black transition-colors hover:bg-transparent"
+            className="w-full rounded-full border-2 border-[#daa520] bg-[#daa520] px-8 py-3 text-sm font-bold text-black transition-colors hover:bg-transparent md:w-auto"
           >PROTECT YOUR PURCHASE</button>
         </div>
       </div>
