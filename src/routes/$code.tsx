@@ -201,7 +201,7 @@ function Certificate({ cert }: { cert: Certificate }) {
             }}
             className="rounded-full bg-black px-8 py-3 text-sm font-bold text-white"
           >SHARE</button>
-          <button className="rounded-full bg-[#d59824] px-8 py-3 text-sm font-bold text-black">PROTECT YOUR PURCHASE</button>
+          <button className="rounded-full bg-[#daa520] px-8 py-3 text-sm font-bold text-black">PROTECT YOUR PURCHASE</button>
         </div>
       </div>
     </div>
