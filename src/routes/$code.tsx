@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getCertificateByCode, type Certificate } from "@/lib/certificates";
 import { generateQrWithLogo } from "@/lib/qr";
 import { CertBackground } from "@/components/CertBackground";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Facebook, Twitter, Linkedin, Search, Info } from "lucide-react";
 import entrupyLogo from "@/assets/entrupy-logo.png.asset.json";
 import verifiedSeal from "@/assets/verified-seal.jpg.asset.json";
 
