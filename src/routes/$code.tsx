@@ -50,7 +50,11 @@ function CertificatePage() {
 function Certificate({ cert }: { cert: Certificate }) {
   const [activeImg, setActiveImg] = useState(0);
   const [qrUrl, setQrUrl] = useState<string>("");
+  const [shareOpen, setShareOpen] = useState(false);
+  const [protectOpen, setProtectOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
   const certUrl = typeof window !== "undefined" ? `${window.location.origin}/${cert.code}` : `/${cert.code}`;
+  const shareUrl = `${certUrl}?format=sharable&locale=en`;
 
   useEffect(() => {
     generateQrWithLogo(certUrl, 400).then(setQrUrl).catch(() => {});
