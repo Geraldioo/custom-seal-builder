@@ -65,13 +65,13 @@ function Certificate({ cert }: { cert: Certificate }) {
     <div className="min-h-screen bg-white">
       {/* Outer gold border frame — squared corners */}
       <div className="mx-auto max-w-[1200px] px-3 py-4 md:px-6 md:py-8">
-        <div className="relative border-[10px] border-[#c89224] bg-[#f4f3ef] md:border-[14px]">
+        <div className="relative border-[10px] border-[#daa520] bg-[#f4f3ef] md:border-[14px]">
           {/* watermark fills entire frame to inner edge of outer border */}
           <div className="absolute inset-0 overflow-hidden">
             <CertBackground code={cert.code} />
           </div>
           {/* inner thin border */}
-          <div className="relative m-1.5 border border-[#c89224]/70 md:m-2">
+          <div className="relative m-1.5 border-2 border-[#daa520]/80 md:m-2">
             <div className="relative p-4 md:p-8">
 
               {/* Header */}
@@ -94,12 +94,12 @@ function Certificate({ cert }: { cert: Certificate }) {
               <div className="relative z-10 mt-6 grid grid-cols-1 gap-6 md:mt-8 md:grid-cols-[minmax(0,300px)_minmax(0,1fr)] md:gap-10">
                 {/* Left: images */}
                 <div>
-                  <div className="aspect-square w-full overflow-hidden bg-neutral-200">
+                  <div className="aspect-square w-full overflow-hidden rounded-xl bg-neutral-200">
                     {mainImg ? (
                       <div className="relative h-full w-full">
                         <img src={mainImg} alt="product" className="h-full w-full object-cover" />
                         <div
-                          className="pointer-events-none absolute inset-x-0 bottom-3 text-center text-3xl text-white/80 md:text-[40px]"
+                          className="pointer-events-none absolute inset-x-0 bottom-2 text-center text-base text-white/80 md:text-lg"
                           style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontWeight: 200, letterSpacing: "0.08em" }}
                         >
                           {cert.code}
@@ -118,7 +118,7 @@ function Certificate({ cert }: { cert: Certificate }) {
                           onMouseEnter={() => setActiveImg(i)}
                           onFocus={() => setActiveImg(i)}
                           onClick={() => setActiveImg(i)}
-                          className={`h-16 w-16 overflow-hidden border-2 transition ${i === activeImg ? "border-[#c89224]" : "border-transparent"}`}
+                          className={`h-16 w-16 overflow-hidden rounded-lg border-2 transition hover:border-[#daa520] ${i === activeImg ? "border-[#daa520]" : "border-transparent"}`}
                         >
                           <img src={src} alt={`thumb-${i}`} className="h-full w-full object-cover" />
                         </button>
@@ -131,7 +131,7 @@ function Certificate({ cert }: { cert: Certificate }) {
                 <div className="space-y-3 text-sm md:text-[15px]">
                   <Field label="Certificate Holder">
                     <span className="font-bold">{cert.holder}</span>
-                    <span className="ml-2 inline-flex h-4 w-4 items-center justify-center rounded-full bg-[#c89224] text-[10px] font-bold text-white">✓</span>
+                    <span className="ml-2 inline-flex h-4 w-4 items-center justify-center rounded-full bg-[#daa520] text-[10px] font-bold text-white">✓</span>
                   </Field>
                   <Field label="Brand"><span className="font-bold">{cert.brand}</span></Field>
                   <Field label="Material"><span className="font-bold">{cert.material}</span></Field>
@@ -145,14 +145,16 @@ function Certificate({ cert }: { cert: Certificate }) {
                 </div>
               </div>
 
+              {/* Trust line — directly below the form */}
+              <p className="relative z-10 mt-6 text-[11px] leading-snug text-neutral-800 md:text-xs">
+                Trust only the certificates that are hosted on{" "}
+                <a className="text-[#0a66c2] underline" href="#">entrupy.com</a>. Certificates displayed or distributed
+                without Entrupy's authorization are considered invalid as per Entrupy's Terms of Service.
+              </p>
+
               {/* Notices + QR */}
-              <div className="relative z-10 mt-8 grid grid-cols-1 gap-6 md:grid-cols-[1fr_auto]">
+              <div className="relative z-10 mt-6 grid grid-cols-1 gap-6 md:grid-cols-[1fr_auto]">
                 <div className="space-y-3 text-[11px] leading-snug text-neutral-800 md:text-xs">
-                  <p>
-                    Trust only the certificates that are hosted on{" "}
-                    <a className="text-[#0a66c2] underline" href="#">entrupy.com</a>. Certificates displayed or distributed
-                    without Entrupy's authorization are considered invalid as per Entrupy's Terms of Service.
-                  </p>
                   <hr className="border-black/40" />
                   <p>
                     Entrupy provides a financial guarantee for this certificate. For more information, visit{" "}
@@ -188,6 +190,7 @@ function Certificate({ cert }: { cert: Certificate }) {
           </div>
         </div>
 
+
         {/* Footer actions */}
         <div className="mt-6 flex flex-wrap justify-center gap-3 pb-8">
           <button onClick={() => window.print()} className="rounded-full bg-black px-8 py-3 text-sm font-bold text-white">PRINT</button>
@@ -198,7 +201,7 @@ function Certificate({ cert }: { cert: Certificate }) {
             }}
             className="rounded-full bg-black px-8 py-3 text-sm font-bold text-white"
           >SHARE</button>
-          <button className="rounded-full bg-[#d59824] px-8 py-3 text-sm font-bold text-black">PROTECT YOUR PURCHASE</button>
+          <button className="rounded-full bg-[#daa520] px-8 py-3 text-sm font-bold text-black">PROTECT YOUR PURCHASE</button>
         </div>
       </div>
     </div>

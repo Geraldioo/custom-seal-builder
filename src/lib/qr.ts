@@ -24,31 +24,26 @@ export async function generateQrWithLogo(url: string, size = 512): Promise<strin
     logo.onerror = () => rej(new Error("logo load failed"));
   });
 
-  // Center logo on a rounded white plate
+  // Center logo on a round white plate
   const logoSize = Math.round(size * 0.22);
   const cx = size / 2;
   const cy = size / 2;
   const pad = 8;
-  const plate = logoSize + pad * 2;
-  const radius = Math.round(plate * 0.28);
-  const x = cx - plate / 2;
-  const y = cy - plate / 2;
+  const plateRadius = logoSize / 2 + pad;
 
   ctx.fillStyle = "#ffffff";
-  roundRect(ctx, x, y, plate, plate, radius);
+  ctx.beginPath();
+  ctx.arc(cx, cy, plateRadius, 0, Math.PI * 2);
   ctx.fill();
 
+  // Clip logo to circle for a fully round look
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(cx, cy, logoSize / 2, 0, Math.PI * 2);
+  ctx.clip();
   ctx.drawImage(logo, cx - logoSize / 2, cy - logoSize / 2, logoSize, logoSize);
+  ctx.restore();
 
   return canvas.toDataURL("image/png");
 }
 
-function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
-  ctx.beginPath();
-  ctx.moveTo(x + r, y);
-  ctx.arcTo(x + w, y, x + w, y + h, r);
-  ctx.arcTo(x + w, y + h, x, y + h, r);
-  ctx.arcTo(x, y + h, x, y, r);
-  ctx.arcTo(x, y, x + w, y, r);
-  ctx.closePath();
-}
