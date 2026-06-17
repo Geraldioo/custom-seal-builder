@@ -1,5 +1,5 @@
 import QRCode from "qrcode";
-import entrupyE from "@/assets/entrupy-e.png.asset.json";
+import entrupyE from "@/assets/entrupy-e-new.png.asset.json";
 
 /**
  * Generate a QR code data URL with the Entrupy "e" logo in the center.
