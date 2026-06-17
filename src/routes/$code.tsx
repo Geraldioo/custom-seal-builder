@@ -118,7 +118,7 @@ function Certificate({ cert }: { cert: Certificate }) {
                           onMouseEnter={() => setActiveImg(i)}
                           onFocus={() => setActiveImg(i)}
                           onClick={() => setActiveImg(i)}
-                          className={`h-16 w-16 overflow-hidden rounded-lg border-2 transition hover:border-[#daa520] ${i === activeImg ? "border-[#daa520]" : "border-transparent"}`}
+                          className={`h-16 w-16 overflow-hidden rounded-lg border-4 transition hover:border-[#daa520] ${i === activeImg ? "border-[#daa520]" : "border-transparent"}`}
                         >
                           <img src={src} alt={`thumb-${i}`} className="h-full w-full object-cover" />
                         </button>
@@ -142,24 +142,22 @@ function Certificate({ cert }: { cert: Certificate }) {
                   </Field>
                   <Field label="Certificate Issued At"><span className="font-bold">{issuedAt}</span></Field>
                   <Field label="Identifier"><span className="font-bold">{cert.identifier}</span></Field>
+                  <p className="pt-3 text-[11px] leading-snug text-neutral-800 md:text-xs">
+                    Trust only the certificates that are hosted on{" "}
+                    <a className="text-[#0a66c2] underline" href="#">entrupy.com</a>. Certificates displayed or distributed
+                    without Entrupy's authorization are considered invalid as per Entrupy's Terms of Service.
+                  </p>
                 </div>
               </div>
-
-              {/* Trust line — directly below the form */}
-              <p className="relative z-10 mt-6 text-[11px] leading-snug text-neutral-800 md:text-xs">
-                Trust only the certificates that are hosted on{" "}
-                <a className="text-[#0a66c2] underline" href="#">entrupy.com</a>. Certificates displayed or distributed
-                without Entrupy's authorization are considered invalid as per Entrupy's Terms of Service.
-              </p>
 
               {/* Notices + QR */}
               <div className="relative z-10 mt-6 grid grid-cols-1 gap-6 md:grid-cols-[1fr_auto]">
                 <div className="space-y-3 text-[11px] leading-snug text-neutral-800 md:text-xs">
-                  <hr className="border-black/40" />
                   <p>
                     Entrupy provides a financial guarantee for this certificate. For more information, visit{" "}
                     <a className="text-[#0a66c2] underline" href="#">entrupy.com/guarantee</a>
                   </p>
+
                   <p>
                     Entrupy offers additional protection plans through XCover for authenticated goods.{" "}
                     <a className="text-[#0a66c2] underline" href="#">Learn more here.</a>
