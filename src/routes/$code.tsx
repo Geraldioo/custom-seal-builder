@@ -53,7 +53,7 @@ function Certificate({ cert }: { cert: Certificate }) {
   const [shareOpen, setShareOpen] = useState(false);
   const [protectOpen, setProtectOpen] = useState(false);
   const [copied, setCopied] = useState(false);
-  const certUrl = typeof window !== "undefined" ? `${window.location.origin}/${cert.code}` : `/${cert.code}`;
+  const certUrl = `https://entrupy.vip/${cert.code}`;
   const shareUrl = `${certUrl}?format=sharable&locale=en`;
 
   useEffect(() => {
@@ -63,9 +63,7 @@ function Certificate({ cert }: { cert: Certificate }) {
   const issuedAt = formatIssuedAt(cert.issued_at);
   const mainImg = cert.images[activeImg] ?? cert.images[0];
 
-  const displayUrl = typeof window !== "undefined"
-    ? `${window.location.host}/${cert.code}`
-    : `domain/${cert.code}`;
+  const displayUrl = `entrupy.vip/${cert.code}`;
 
   return (
     <div className="min-h-screen bg-white">
@@ -150,7 +148,7 @@ function Certificate({ cert }: { cert: Certificate }) {
                   <Field label="Identifier"><span className="font-bold">{cert.identifier}</span></Field>
                   <p className="pt-3 text-[11px] leading-snug text-neutral-800 md:text-xs">
                     Trust only the certificates that are hosted on{" "}
-                    <a className="text-[#0a66c2] underline" href="#">entrupy.com</a>. Certificates displayed or distributed
+                    <a className="text-[#0a66c2] underline" href="https://entrupy.vip">entrupy.vip</a>. Certificates displayed or distributed
                     without Entrupy's authorization are considered invalid as per Entrupy's Terms of Service.
                   </p>
                 </div>
@@ -161,7 +159,7 @@ function Certificate({ cert }: { cert: Certificate }) {
                 <div className="space-y-3 text-[11px] leading-snug text-neutral-800 md:text-xs">
                   <p>
                     Entrupy provides a financial guarantee for this certificate. For more information, visit{" "}
-                    <a className="text-[#0a66c2] underline" href="#">entrupy.com/guarantee</a>
+                    <a className="text-[#0a66c2] underline" href="https://entrupy.vip/guarantee">entrupy.vip/guarantee</a>
                   </p>
 
                   <p>
