@@ -24,18 +24,31 @@ export async function generateQrWithLogo(url: string, size = 512): Promise<strin
     logo.onerror = () => rej(new Error("logo load failed"));
   });
 
-  // Center logo on top of white circular plate
+  // Center logo on a rounded white plate
   const logoSize = Math.round(size * 0.22);
   const cx = size / 2;
   const cy = size / 2;
-  const r = logoSize / 2 + 6;
+  const pad = 8;
+  const plate = logoSize + pad * 2;
+  const radius = Math.round(plate * 0.28);
+  const x = cx - plate / 2;
+  const y = cy - plate / 2;
 
   ctx.fillStyle = "#ffffff";
-  ctx.beginPath();
-  ctx.arc(cx, cy, r, 0, Math.PI * 2);
+  roundRect(ctx, x, y, plate, plate, radius);
   ctx.fill();
 
   ctx.drawImage(logo, cx - logoSize / 2, cy - logoSize / 2, logoSize, logoSize);
 
   return canvas.toDataURL("image/png");
+}
+
+function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
 }
