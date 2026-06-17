@@ -90,8 +90,8 @@ function Certificate({ cert }: { cert: Certificate }) {
                   />
                 </div>
                 <h1
-                  className="mt-4 text-center text-[28px] leading-none tracking-tight md:hidden"
-                  style={{ fontFamily: "'Archivo Black', 'Helvetica Neue', Arial, sans-serif", fontWeight: 900, letterSpacing: "-0.01em" }}
+                  className="mt-4 text-center text-[30px] leading-none md:hidden"
+                  style={{ fontFamily: "'Oswald', 'Helvetica Neue', Arial, sans-serif", fontWeight: 700, letterSpacing: "0.01em" }}
                 >
                   CERTIFICATE OF AUTHENTICITY
                 </h1>
@@ -101,7 +101,7 @@ function Certificate({ cert }: { cert: Certificate }) {
                   <img src={entrupyLogo.url} alt="entrupy" className="h-20 object-contain" />
                   <h1
                     className="text-center text-[34px] tracking-tight"
-                    style={{ fontFamily: "'Archivo Black', 'Helvetica Neue', Arial, sans-serif", fontWeight: 900, letterSpacing: "-0.01em" }}
+                    style={{ fontFamily: "'Times New Roman', Georgia, serif", fontWeight: 400, letterSpacing: "0.04em" }}
                   >
                     CERTIFICATE OF AUTHENTICITY
                   </h1>
