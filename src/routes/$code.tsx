@@ -91,14 +91,17 @@ function Certificate({ cert }: { cert: Certificate }) {
               </div>
 
               {/* Body */}
-              <div className="relative z-10 mt-6 grid grid-cols-1 gap-6 md:mt-8 md:grid-cols-2 md:gap-10">
+              <div className="relative z-10 mt-6 grid grid-cols-1 gap-6 md:mt-8 md:grid-cols-[minmax(0,300px)_minmax(0,1fr)] md:gap-10">
                 {/* Left: images */}
                 <div>
                   <div className="aspect-square w-full overflow-hidden bg-neutral-200">
                     {mainImg ? (
                       <div className="relative h-full w-full">
                         <img src={mainImg} alt="product" className="h-full w-full object-cover" />
-                        <div className="pointer-events-none absolute inset-x-0 bottom-4 text-center text-2xl font-bold text-white/70 md:text-4xl">
+                        <div
+                          className="pointer-events-none absolute inset-x-0 bottom-3 text-center text-3xl text-white/80 md:text-[40px]"
+                          style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontWeight: 200, letterSpacing: "0.08em" }}
+                        >
                           {cert.code}
                         </div>
                       </div>
@@ -107,12 +110,15 @@ function Certificate({ cert }: { cert: Certificate }) {
                     )}
                   </div>
                   {cert.images.length > 1 && (
-                    <div className="mt-3 flex gap-2">
+                    <div className="mt-3 flex justify-center gap-3">
                       {cert.images.map((src, i) => (
                         <button
                           key={i}
+                          type="button"
+                          onMouseEnter={() => setActiveImg(i)}
+                          onFocus={() => setActiveImg(i)}
                           onClick={() => setActiveImg(i)}
-                          className={`h-16 w-16 overflow-hidden border-2 ${i === activeImg ? "border-[#c89224]" : "border-transparent"}`}
+                          className={`h-16 w-16 overflow-hidden border-2 transition ${i === activeImg ? "border-[#c89224]" : "border-transparent"}`}
                         >
                           <img src={src} alt={`thumb-${i}`} className="h-full w-full object-cover" />
                         </button>
