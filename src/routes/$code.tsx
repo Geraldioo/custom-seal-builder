@@ -159,7 +159,7 @@ function Certificate({ cert }: { cert: Certificate }) {
                 <div className="space-y-3 text-[11px] leading-snug text-neutral-800 md:text-xs">
                   <p>
                     Entrupy provides a financial guarantee for this certificate. For more information, visit{" "}
-                    <a className="text-[#0a66c2] underline" href="#">entrupy.com/guarantee</a>
+                    <a className="text-[#0a66c2] underline" href="https://entrupy.vip/guarantee">entrupy.vip/guarantee</a>
                   </p>
 
                   <p>
