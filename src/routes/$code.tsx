@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getCertificateByCode, type Certificate } from "@/lib/certificates";
 import { generateQrWithLogo } from "@/lib/qr";
 import { CertBackground } from "@/components/CertBackground";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Facebook, Twitter, Linkedin, Search, Info } from "lucide-react";
 import entrupyLogo from "@/assets/entrupy-logo.png.asset.json";
 import verifiedSeal from "@/assets/verified-seal.jpg.asset.json";
 
@@ -48,7 +50,11 @@ function CertificatePage() {
 function Certificate({ cert }: { cert: Certificate }) {
   const [activeImg, setActiveImg] = useState(0);
   const [qrUrl, setQrUrl] = useState<string>("");
+  const [shareOpen, setShareOpen] = useState(false);
+  const [protectOpen, setProtectOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
   const certUrl = typeof window !== "undefined" ? `${window.location.origin}/${cert.code}` : `/${cert.code}`;
+  const shareUrl = `${certUrl}?format=sharable&locale=en`;
 
   useEffect(() => {
     generateQrWithLogo(certUrl, 400).then(setQrUrl).catch(() => {});
@@ -191,26 +197,103 @@ function Certificate({ cert }: { cert: Certificate }) {
 
         {/* Footer actions */}
         <div className="mt-6 flex flex-wrap justify-center gap-3 pb-8">
-          <button onClick={() => window.print()} className="rounded-full bg-black px-8 py-3 text-sm font-bold text-white">PRINT</button>
           <button
-            onClick={() => {
-              if (navigator.share) navigator.share({ url: certUrl, title: `Entrupy ${cert.code}` }).catch(() => {});
-              else navigator.clipboard.writeText(certUrl);
-            }}
-            className="rounded-full bg-black px-8 py-3 text-sm font-bold text-white"
+            onClick={() => window.print()}
+            className="rounded-full border-2 border-black bg-black px-8 py-3 text-sm font-bold text-white transition-colors hover:bg-transparent hover:text-black"
+          >PRINT</button>
+          <button
+            onClick={() => setShareOpen(true)}
+            className="rounded-full border-2 border-black bg-black px-8 py-3 text-sm font-bold text-white transition-colors hover:bg-transparent hover:text-black"
           >SHARE</button>
-          <button className="rounded-full bg-[#daa520] px-8 py-3 text-sm font-bold text-black">PROTECT YOUR PURCHASE</button>
+          <button
+            onClick={() => setProtectOpen(true)}
+            className="rounded-full border-2 border-[#daa520] bg-[#daa520] px-8 py-3 text-sm font-bold text-black transition-colors hover:bg-transparent"
+          >PROTECT YOUR PURCHASE</button>
         </div>
       </div>
+
+      {/* Share dialog */}
+      <Dialog open={shareOpen} onOpenChange={setShareOpen}>
+        <DialogContent className="max-w-[560px] gap-0 rounded-2xl border-none p-0 sm:rounded-2xl">
+          <div className="px-7 pt-6 pb-4">
+            <h2 className="text-xl font-bold text-[#0f2c4a]">Share Certificate</h2>
+          </div>
+          <div className="h-px bg-[#daa520]" />
+          <div className="px-7 py-6">
+            <p className="text-[15px] font-semibold text-[#0f2c4a]">Share this link via:</p>
+            <div className="mt-5 flex justify-center gap-4">
+              <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noreferrer" className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#1877f2] text-white"><Facebook className="h-6 w-6 fill-white" /></a>
+              <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noreferrer" className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#1da1f2] text-white"><Twitter className="h-6 w-6 fill-white" /></a>
+              <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noreferrer" className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#0a66c2] text-white"><Linkedin className="h-6 w-6 fill-white" /></a>
+            </div>
+            <p className="mt-6 text-[15px] font-semibold text-[#0f2c4a]">Or copy link:</p>
+            <div className="mt-3 flex items-center gap-2 rounded-full border border-neutral-300 bg-white py-1 pl-4 pr-1">
+              <span className="flex-1 truncate text-xs text-[#daa520]">{shareUrl}</span>
+              <button
+                onClick={() => { navigator.clipboard.writeText(shareUrl); setCopied(true); setTimeout(() => setCopied(false), 1500); }}
+                className="rounded-full bg-black px-6 py-2 text-xs font-bold text-white"
+              >{copied ? "COPIED" : "COPY"}</button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Protect dialog */}
+      <Dialog open={protectOpen} onOpenChange={setProtectOpen}>
+        <DialogContent className="max-w-[640px] gap-0 rounded-2xl border-none p-0 sm:rounded-2xl">
+          <div className="px-7 pt-6 pb-4">
+            <h2 className="text-2xl font-bold text-[#0f2c4a]">Protection for your Collection</h2>
+          </div>
+          <div className="h-px bg-[#daa520]" />
+          <div className="px-7 py-6">
+            <p className="text-sm leading-relaxed text-neutral-800">
+              Congratulations on your newly authenticated bag! Authentic luxury goods are treasures that can last a lifetime - get it a protection plan to match.
+            </p>
+            <div className="mt-4 flex items-center gap-3">
+              <img src={entrupyLogo.url} alt="entrupy" className="h-5 object-contain" />
+              <span className="text-neutral-400">|</span>
+              <span className="text-[11px] text-neutral-500">Powered by</span>
+              <span className="text-sm font-bold"><span className="text-[#f5b40a]">X</span>COVER.COM</span>
+            </div>
+            <h3 className="mt-5 text-[17px] font-bold text-neutral-900">Protect your authenticated handbag with XCover!</h3>
+            <p className="mt-1 text-sm text-neutral-800">Search for your handbag's brand &amp; the price range you paid for your handbag.</p>
+
+            <label className="mt-5 block text-sm font-bold text-neutral-900">Product Title or SKU</label>
+            <div className="mt-2 flex">
+              <input
+                type="text"
+                placeholder="Search by product title or SKU"
+                className="flex-1 rounded-l-md border-2 border-black bg-white px-3 py-2.5 text-sm outline-none placeholder:text-neutral-400"
+              />
+              <button type="button" className="flex items-center justify-center rounded-r-md border-2 border-l-0 border-black bg-neutral-300 px-4">
+                <Search className="h-4 w-4 text-white" />
+              </button>
+            </div>
+            <p className="mt-1 text-xs italic text-neutral-500">(Minimum of 3 characters required)</p>
+
+            <div className="mt-4 flex items-center gap-1 text-sm font-bold text-neutral-900">
+              Did you buy your product in the past 30 days? <Info className="h-3.5 w-3.5 text-neutral-400" />
+            </div>
+            <div className="mt-2 grid grid-cols-2 gap-3">
+              <label className="flex cursor-pointer items-center gap-2 rounded-md border border-neutral-300 px-4 py-3 text-sm">
+                <input type="radio" name="purchased30" className="h-4 w-4" /> Yes
+              </label>
+              <label className="flex cursor-pointer items-center gap-2 rounded-md border border-neutral-300 px-4 py-3 text-sm">
+                <input type="radio" name="purchased30" className="h-4 w-4" /> No
+              </label>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="flex items-center justify-between gap-4 border-b border-neutral-300/70 bg-white/70 px-3 py-2.5">
+    <div className="grid grid-cols-[140px_1fr] items-center gap-4 border-b border-neutral-300/70 bg-white/70 px-3 py-2.5 md:grid-cols-[160px_1fr]">
       <span className="text-neutral-500">{label}</span>
-      <span className="text-right text-neutral-900">{children}</span>
+      <span className="text-neutral-900">{children}</span>
     </div>
   );
 }
