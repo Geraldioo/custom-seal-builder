@@ -6,8 +6,8 @@ import { generateQrWithLogo } from "@/lib/qr";
 import { CertBackground } from "@/components/CertBackground";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Facebook, Twitter, Linkedin, Search, Info } from "lucide-react";
-import entrupyLogo from "@/assets/entrupy-logo.png.asset.json";
-import verifiedSeal from "@/assets/verified-seal.jpg.asset.json";
+import entrupyLogo from "@/assets/entrupy-text.png.asset.json";
+import verifiedSeal from "@/assets/verified-seal-new.png.asset.json";
 
 export const Route = createFileRoute("/$code")({
   head: ({ params }) => ({
