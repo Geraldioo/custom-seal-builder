@@ -148,7 +148,7 @@ function Certificate({ cert }: { cert: Certificate }) {
                   <Field label="Identifier"><span className="font-bold">{cert.identifier}</span></Field>
                   <p className="pt-3 text-[11px] leading-snug text-neutral-800 md:text-xs">
                     Trust only the certificates that are hosted on{" "}
-                    <a className="text-[#0a66c2] underline" href="#">entrupy.com</a>. Certificates displayed or distributed
+                    <a className="text-[#0a66c2] underline" href="https://entrupy.vip">entrupy.vip</a>. Certificates displayed or distributed
                     without Entrupy's authorization are considered invalid as per Entrupy's Terms of Service.
                   </p>
                 </div>
