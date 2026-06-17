@@ -79,19 +79,38 @@ function Certificate({ cert }: { cert: Certificate }) {
             <div className="relative p-4 md:p-8">
 
               {/* Header */}
-              <div className="relative z-10 flex flex-col items-center gap-4 md:flex-row md:items-center md:justify-between">
-                <img src={entrupyLogo.url} alt="entrupy" className="h-14 md:h-20 object-contain" />
+              <div className="relative z-10">
+                {/* Mobile: logo + seal on one row, title centered below */}
+                <div className="flex items-center justify-between md:hidden">
+                  <img src={entrupyLogo.url} alt="entrupy" className="h-12 object-contain" />
+                  <img
+                    src={verifiedSeal.url}
+                    alt="Verified"
+                    className="h-16 w-16 rounded-full object-cover"
+                  />
+                </div>
                 <h1
-                  className="text-center text-2xl tracking-tight md:text-[34px]"
-                  style={{ fontFamily: "'Times New Roman', Georgia, serif", fontWeight: 400, letterSpacing: "0.04em" }}
+                  className="mt-4 text-center text-[28px] leading-none tracking-tight md:hidden"
+                  style={{ fontFamily: "'Archivo Black', 'Helvetica Neue', Arial, sans-serif", fontWeight: 900, letterSpacing: "-0.01em" }}
                 >
                   CERTIFICATE OF AUTHENTICITY
                 </h1>
-                <img
-                  src={verifiedSeal.url}
-                  alt="Verified"
-                  className="h-20 w-20 md:h-24 md:w-24 rounded-full object-cover"
-                />
+
+                {/* Desktop: single row */}
+                <div className="hidden md:flex md:items-center md:justify-between md:gap-4">
+                  <img src={entrupyLogo.url} alt="entrupy" className="h-20 object-contain" />
+                  <h1
+                    className="text-center text-[34px] tracking-tight"
+                    style={{ fontFamily: "'Archivo Black', 'Helvetica Neue', Arial, sans-serif", fontWeight: 900, letterSpacing: "-0.01em" }}
+                  >
+                    CERTIFICATE OF AUTHENTICITY
+                  </h1>
+                  <img
+                    src={verifiedSeal.url}
+                    alt="Verified"
+                    className="h-24 w-24 rounded-full object-cover"
+                  />
+                </div>
               </div>
 
               {/* Body */}
@@ -194,18 +213,20 @@ function Certificate({ cert }: { cert: Certificate }) {
 
 
         {/* Footer actions */}
-        <div className="mt-6 flex flex-wrap justify-center gap-3 pb-8">
-          <button
-            onClick={() => window.print()}
-            className="rounded-full border-2 border-black bg-black px-8 py-3 text-sm font-bold text-white transition-colors hover:bg-transparent hover:text-black"
-          >PRINT</button>
-          <button
-            onClick={() => setShareOpen(true)}
-            className="rounded-full border-2 border-black bg-black px-8 py-3 text-sm font-bold text-white transition-colors hover:bg-transparent hover:text-black"
-          >SHARE</button>
+        <div className="mt-6 flex flex-col gap-3 pb-8 md:flex-row md:flex-wrap md:justify-center">
+          <div className="grid grid-cols-2 gap-3 md:contents">
+            <button
+              onClick={() => window.print()}
+              className="rounded-full border-2 border-black bg-black px-8 py-3 text-sm font-bold text-white transition-colors hover:bg-transparent hover:text-black"
+            >PRINT</button>
+            <button
+              onClick={() => setShareOpen(true)}
+              className="rounded-full border-2 border-black bg-black px-8 py-3 text-sm font-bold text-white transition-colors hover:bg-transparent hover:text-black"
+            >SHARE</button>
+          </div>
           <button
             onClick={() => setProtectOpen(true)}
-            className="rounded-full border-2 border-[#daa520] bg-[#daa520] px-8 py-3 text-sm font-bold text-black transition-colors hover:bg-transparent"
+            className="w-full rounded-full border-2 border-[#daa520] bg-[#daa520] px-8 py-3 text-sm font-bold text-black transition-colors hover:bg-transparent md:w-auto"
           >PROTECT YOUR PURCHASE</button>
         </div>
       </div>
