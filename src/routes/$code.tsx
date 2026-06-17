@@ -218,7 +218,7 @@ function Certificate({ cert }: { cert: Certificate }) {
           <div className="px-7 pt-6 pb-4">
             <h2 className="text-xl font-bold text-[#0f2c4a]">Share Certificate</h2>
           </div>
-          <div className="h-px bg-[#daa520]" />
+          <div className="h-[2px] w-full bg-[#daa520]" />
           <div className="px-7 py-6">
             <p className="text-[15px] font-semibold text-[#0f2c4a]">Share this link via:</p>
             <div className="mt-5 flex justify-center gap-4">
@@ -244,7 +244,7 @@ function Certificate({ cert }: { cert: Certificate }) {
           <div className="px-7 pt-6 pb-4">
             <h2 className="text-2xl font-bold text-[#0f2c4a]">Protection for your Collection</h2>
           </div>
-          <div className="h-px bg-[#daa520]" />
+          <div className="h-[2px] w-full bg-[#daa520]" />
           <div className="px-7 py-6">
             <p className="text-sm leading-relaxed text-neutral-800">
               Congratulations on your newly authenticated bag! Authentic luxury goods are treasures that can last a lifetime - get it a protection plan to match.
