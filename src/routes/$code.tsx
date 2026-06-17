@@ -98,13 +98,13 @@ function Certificate({ cert }: { cert: Certificate }) {
               <div className="relative z-10 mt-6 grid grid-cols-1 gap-6 md:mt-8 md:grid-cols-[minmax(0,300px)_minmax(0,1fr)] md:gap-10">
                 {/* Left: images */}
                 <div>
-                  <div className="aspect-square w-full overflow-hidden rounded-xl bg-neutral-200">
+                  <div className="@container aspect-square w-full overflow-hidden rounded-xl bg-neutral-200">
                     {mainImg ? (
                       <div className="relative h-full w-full">
                         <img src={mainImg} alt="product" className="h-full w-full object-cover" />
                         <div
                           className="pointer-events-none absolute inset-x-0 bottom-[6%] text-center text-white/70"
-                          style={{ fontFamily: "'Helvetica Neue', 'Arial', sans-serif", fontWeight: 100, letterSpacing: "0.06em", fontSize: "clamp(34px, 9.5%, 90px)", lineHeight: 1, textShadow: "0 1px 2px rgba(0,0,0,0.25)" }}
+                          style={{ fontFamily: "'Helvetica Neue', 'Arial', sans-serif", fontWeight: 100, letterSpacing: "0.06em", fontSize: "9cqw", lineHeight: 1, textShadow: "0 1px 2px rgba(0,0,0,0.25)" }}
                         >
                           {cert.code}
                         </div>
