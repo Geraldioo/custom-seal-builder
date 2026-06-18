@@ -1,22 +1,29 @@
 /**
- * Watermark background made of repeating unique-code text — small, dense, gap-less.
+ * Watermark background made of repeating unique-code text — rendered as HTML
+ * so web fonts (Oswald) actually apply (SVG background-image can't load web fonts).
  */
 export function CertBackground({ code, className = "" }: { code: string; className?: string }) {
-  const text = `${code}`.repeat(60);
-  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='600' height='18'>
-    <text x='0' y='13' font-family='Oswald, Arial, sans-serif' font-weight='700'
-      font-size='11' fill='#000' fill-opacity='0.09' letter-spacing='0.5'>${text}</text>
-  </svg>`;
-  const url = `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`;
+  const line = `${code} `.repeat(40);
+  const lines = Array.from({ length: 80 });
   return (
     <div
       aria-hidden
-      className={`absolute inset-0 pointer-events-none ${className}`}
+      className={`absolute inset-0 pointer-events-none overflow-hidden ${className}`}
       style={{
-        backgroundImage: url,
-        backgroundRepeat: "repeat",
-        backgroundSize: "600px 18px",
+        fontFamily: "Oswald, 'Helvetica Neue', Arial, sans-serif",
+        fontWeight: 700,
+        fontSize: "11px",
+        lineHeight: "13px",
+        letterSpacing: "0.5px",
+        color: "#000",
+        opacity: 0.09,
+        whiteSpace: "nowrap",
+        userSelect: "none",
       }}
-    />
+    >
+      {lines.map((_, i) => (
+        <div key={i}>{line}</div>
+      ))}
+    </div>
   );
 }
