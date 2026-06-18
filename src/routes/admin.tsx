@@ -12,7 +12,7 @@ import {
 } from "@/lib/certificates";
 import { toast, Toaster } from "sonner";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/admin")({
   head: () => ({
     meta: [
       { title: "Certificate Admin" },
