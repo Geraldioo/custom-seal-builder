@@ -46,6 +46,13 @@ function CertificatePage() {
     );
   }
 
+  // Check for printable mode with mobile size — use dedicated layout
+  if (typeof window !== "undefined") {
+    const p = new URLSearchParams(window.location.search);
+    if (p.get("format") === "printable" && p.get("size") === "mobile") {
+      return <MobilePrintCertificate cert={data} />;
+    }
+  }
   return <Certificate cert={data} />;
 }
 
