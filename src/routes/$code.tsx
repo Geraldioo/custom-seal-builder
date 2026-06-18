@@ -1,5 +1,5 @@
 import { createFileRoute, notFound, useRouter } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getCertificateByCode, type Certificate } from "@/lib/certificates";
 import { generateQrWithLogo } from "@/lib/qr";
@@ -8,6 +8,8 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Facebook, Twitter, Linkedin, Search, Info } from "lucide-react";
 import entrupyLogo from "@/assets/entrupy-text.png.asset.json";
 import verifiedSeal from "@/assets/verified-seal-new.png.asset.json";
+
+type PrintSize = "a4" | "letter" | "mobile";
 
 export const Route = createFileRoute("/$code")({
   head: ({ params }) => ({
@@ -52,25 +54,88 @@ function Certificate({ cert }: { cert: Certificate }) {
   const [qrUrl, setQrUrl] = useState<string>("");
   const [shareOpen, setShareOpen] = useState(false);
   const [protectOpen, setProtectOpen] = useState(false);
+  const [printOpen, setPrintOpen] = useState(false);
+  const [printSize, setPrintSize] = useState<PrintSize>("letter");
   const [copied, setCopied] = useState(false);
   const certUrl = `https://entrupy.vip/${cert.code}`;
   const shareUrl = `${certUrl}?format=sharable&locale=en`;
+
+  // Read URL params for printable mode
+  const { isPrintable, forcedSize } = useMemo(() => {
+    if (typeof window === "undefined") return { isPrintable: false, forcedSize: null as PrintSize | null };
+    const p = new URLSearchParams(window.location.search);
+    const fmt = p.get("format");
+    const sz = p.get("size") as PrintSize | null;
+    return {
+      isPrintable: fmt === "printable",
+      forcedSize: sz === "a4" || sz === "letter" || sz === "mobile" ? sz : null,
+    };
+  }, []);
+
+  const wantMobile = forcedSize === "mobile";
+  const forced = isPrintable && !!forcedSize;
 
   useEffect(() => {
     generateQrWithLogo(certUrl, 400).then(setQrUrl).catch(() => {});
   }, [certUrl]);
 
+  // In printable mode: set filename to {code}.pdf via document.title, then auto-print
+  useEffect(() => {
+    if (!isPrintable) return;
+    const prevTitle = document.title;
+    document.title = cert.code;
+    const t = setTimeout(() => {
+      try { window.print(); } catch {}
+    }, 1200);
+    return () => { clearTimeout(t); document.title = prevTitle; };
+  }, [isPrintable, cert.code, qrUrl]);
+
   const issuedAt = formatIssuedAt(cert.issued_at);
   const mainImg = cert.images[activeImg] ?? cert.images[0];
-
   const displayUrl = `entrupy.vip/${cert.code}`;
+
+  const openPrint = () => {
+    const url = `${window.location.origin}/${cert.code}?format=printable&size=${printSize}`;
+    window.open(url, "_blank", "noopener");
+    setPrintOpen(false);
+  };
+
+  // Layout class helpers
+  const mobileBlockCls = forced ? (wantMobile ? "" : "hidden") : "md:hidden";
+  const desktopFlexCls = forced ? (wantMobile ? "hidden" : "flex items-center justify-between gap-4") : "hidden md:flex md:items-center md:justify-between md:gap-4";
+  const bodyGridCls = forced
+    ? (wantMobile ? "grid grid-cols-1 gap-6" : "grid grid-cols-[minmax(0,300px)_minmax(0,1fr)] gap-10")
+    : "grid grid-cols-1 gap-6 md:grid-cols-[minmax(0,300px)_minmax(0,1fr)] md:gap-10";
+  const footerGridCls = forced
+    ? (wantMobile ? "grid grid-cols-1 gap-6" : "grid grid-cols-[1fr_auto] gap-6")
+    : "grid grid-cols-1 gap-6 md:grid-cols-[1fr_auto]";
+  const qrCaptionMobileCls = forced ? (wantMobile ? "" : "hidden") : "md:hidden";
+  const qrCaptionDesktopCls = forced
+    ? (wantMobile ? "hidden" : "block text-center text-[11px] text-neutral-700 max-w-[140px]")
+    : "hidden text-center text-[11px] text-neutral-700 md:block md:max-w-[140px]";
+  const titleMobileCls = forced ? (wantMobile ? "block" : "hidden") : "md:hidden";
+  const containerMaxW = forced
+    ? (wantMobile ? "max-w-[440px]" : "max-w-[1200px]")
+    : "max-w-[1200px]";
+
+  const pageSizeCss = forcedSize === "a4" ? "A4" : forcedSize === "letter" ? "letter" : "105mm 170mm";
 
   return (
     <div className="min-h-screen bg-white">
+      {isPrintable && (
+        <style>{`
+          @page { size: ${pageSizeCss}; margin: 6mm; }
+          @media print {
+            body { background: white !important; }
+            .no-print { display: none !important; }
+          }
+        `}</style>
+      )}
+
       {/* Outer gold border frame — squared corners */}
-      <div className="mx-auto max-w-[1200px] px-3 py-4 md:px-6 md:py-8">
+      <div className={`mx-auto ${containerMaxW} px-3 py-4 md:px-6 md:py-8`}>
         <div className="relative border-[10px] border-[#daa520] bg-[#f4f3ef] md:border-[14px]">
-          {/* watermark fills entire frame to inner edge of outer border */}
+          {/* watermark */}
           <div className="absolute inset-0 overflow-hidden">
             <CertBackground code={cert.code} />
           </div>
@@ -80,8 +145,8 @@ function Certificate({ cert }: { cert: Certificate }) {
 
               {/* Header */}
               <div className="relative z-10">
-                {/* Mobile: logo + seal on one row, title centered below */}
-                <div className="flex items-center justify-between md:hidden">
+                {/* Mobile-style: logo + seal one row, title centered below */}
+                <div className={`flex items-center justify-between ${mobileBlockCls}`}>
                   <img src={entrupyLogo.url} alt="entrupy" className="h-12 object-contain" />
                   <img
                     src={verifiedSeal.url}
@@ -90,14 +155,14 @@ function Certificate({ cert }: { cert: Certificate }) {
                   />
                 </div>
                 <h1
-                  className="mt-4 text-center text-[30px] leading-none md:hidden"
+                  className={`mt-4 text-center text-[30px] leading-none ${titleMobileCls}`}
                   style={{ fontFamily: "'Oswald', 'Helvetica Neue', Arial, sans-serif", fontWeight: 700, letterSpacing: "0.01em" }}
                 >
                   CERTIFICATE OF AUTHENTICITY
                 </h1>
 
-                {/* Desktop: single row */}
-                <div className="hidden md:flex md:items-center md:justify-between md:gap-4">
+                {/* Desktop-style: single row */}
+                <div className={desktopFlexCls}>
                   <img src={entrupyLogo.url} alt="entrupy" className="h-20 object-contain" />
                   <h1
                     className="text-center text-[34px] tracking-tight"
@@ -114,7 +179,7 @@ function Certificate({ cert }: { cert: Certificate }) {
               </div>
 
               {/* Body */}
-              <div className="relative z-10 mt-6 grid grid-cols-1 gap-6 md:mt-8 md:grid-cols-[minmax(0,300px)_minmax(0,1fr)] md:gap-10">
+              <div className={`relative z-10 mt-6 md:mt-8 ${bodyGridCls}`}>
                 {/* Left: images */}
                 <div>
                   <div className="@container aspect-square w-full overflow-hidden rounded-xl bg-neutral-200">
@@ -174,13 +239,12 @@ function Certificate({ cert }: { cert: Certificate }) {
               </div>
 
               {/* Notices + QR */}
-              <div className="relative z-10 mt-6 grid grid-cols-1 gap-6 md:grid-cols-[1fr_auto]">
+              <div className={`relative z-10 mt-6 ${footerGridCls}`}>
                 <div className="space-y-3 text-[11px] leading-snug text-neutral-800 md:text-xs">
                   <p>
                     Entrupy provides a financial guarantee for this certificate. For more information, visit{" "}
                     <a className="text-[#0a66c2] underline" href="https://entrupy.com/guarantee">entrupy.com/guarantee</a>
                   </p>
-
                   <p>
                     Entrupy offers additional protection plans through XCover for authenticated goods.{" "}
                     <a className="text-[#0a66c2] underline" href="#">Learn more here.</a>
@@ -193,16 +257,16 @@ function Certificate({ cert }: { cert: Certificate }) {
                     any of the Entrupy's findings and may not honor any certificates of authenticity provided by Entrupy.
                   </p>
                 </div>
-                <div className="flex flex-col items-center md:items-end">
-                  <p className="mb-2 text-center text-xs text-neutral-700 md:hidden">
+                <div className={`flex flex-col ${forced ? (wantMobile ? "items-center" : "items-end") : "items-center md:items-end"}`}>
+                  <p className={`mb-2 text-center text-xs text-neutral-700 ${qrCaptionMobileCls}`}>
                     Scan the QR code to verify the<br />authenticity of the certificate.
                   </p>
                   {qrUrl ? (
-                    <img src={qrUrl} alt="QR" className="h-40 w-40 md:h-32 md:w-32" />
+                    <img src={qrUrl} alt="QR" className={forced ? (wantMobile ? "h-40 w-40" : "h-32 w-32") : "h-40 w-40 md:h-32 md:w-32"} />
                   ) : (
-                    <div className="h-40 w-40 animate-pulse bg-neutral-200 md:h-32 md:w-32" />
+                    <div className={forced ? (wantMobile ? "h-40 w-40 animate-pulse bg-neutral-200" : "h-32 w-32 animate-pulse bg-neutral-200") : "h-40 w-40 animate-pulse bg-neutral-200 md:h-32 md:w-32"} />
                   )}
-                  <p className="mt-2 hidden text-center text-[11px] text-neutral-700 md:block md:max-w-[140px]">
+                  <p className={`mt-2 ${qrCaptionDesktopCls}`}>
                     Scan the QR code to verify the authenticity of the certificate.
                   </p>
                 </div>
@@ -212,24 +276,63 @@ function Certificate({ cert }: { cert: Certificate }) {
         </div>
 
 
-        {/* Footer actions */}
-        <div className="mt-6 flex flex-col gap-3 pb-8 md:flex-row md:flex-wrap md:justify-center">
-          <div className="grid grid-cols-2 gap-3 md:contents">
+        {/* Footer actions — hidden in printable mode */}
+        {!isPrintable && (
+          <div className="no-print mt-6 flex flex-col gap-3 pb-8 md:flex-row md:flex-wrap md:justify-center">
+            <div className="grid grid-cols-2 gap-3 md:contents">
+              <button
+                onClick={() => setPrintOpen(true)}
+                className="rounded-full border-2 border-black bg-black px-8 py-3 text-sm font-bold text-white transition-colors hover:bg-transparent hover:text-black"
+              >PRINT</button>
+              <button
+                onClick={() => setShareOpen(true)}
+                className="rounded-full border-2 border-black bg-black px-8 py-3 text-sm font-bold text-white transition-colors hover:bg-transparent hover:text-black"
+              >SHARE</button>
+            </div>
             <button
-              onClick={() => window.print()}
-              className="rounded-full border-2 border-black bg-black px-8 py-3 text-sm font-bold text-white transition-colors hover:bg-transparent hover:text-black"
-            >PRINT</button>
-            <button
-              onClick={() => setShareOpen(true)}
-              className="rounded-full border-2 border-black bg-black px-8 py-3 text-sm font-bold text-white transition-colors hover:bg-transparent hover:text-black"
-            >SHARE</button>
+              onClick={() => setProtectOpen(true)}
+              className="w-full rounded-full border-2 border-[#daa520] bg-[#daa520] px-8 py-3 text-sm font-bold text-black transition-colors hover:bg-transparent md:w-auto"
+            >PROTECT YOUR PURCHASE</button>
           </div>
-          <button
-            onClick={() => setProtectOpen(true)}
-            className="w-full rounded-full border-2 border-[#daa520] bg-[#daa520] px-8 py-3 text-sm font-bold text-black transition-colors hover:bg-transparent md:w-auto"
-          >PROTECT YOUR PURCHASE</button>
-        </div>
+        )}
       </div>
+
+      {/* Print dialog */}
+      <Dialog open={printOpen} onOpenChange={setPrintOpen}>
+        <DialogContent className="max-w-[560px] gap-0 rounded-2xl border-none p-0 sm:rounded-2xl">
+          <div className="px-7 pt-6 pb-4">
+            <h2 className="text-xl font-bold text-[#0f2c4a]" style={{ fontFamily: "'Georgia', serif" }}>Print Certificate</h2>
+          </div>
+          <div className="h-[2px] w-full bg-[#daa520]" />
+          <div className="px-7 py-6">
+            <p className="text-[15px] font-semibold text-[#0f2c4a]" style={{ fontFamily: "'Georgia', serif" }}>Paper Size:</p>
+            <div className="mt-5 grid grid-cols-3 gap-3">
+              {([
+                { v: "a4", label: "A4" },
+                { v: "letter", label: "US Letter" },
+                { v: "mobile", label: "Mobile" },
+              ] as const).map((opt) => (
+                <label key={opt.v} className="flex cursor-pointer items-center gap-2 text-sm text-[#0f2c4a]">
+                  <input
+                    type="radio"
+                    name="paperSize"
+                    checked={printSize === opt.v}
+                    onChange={() => setPrintSize(opt.v)}
+                    className="h-4 w-4 accent-[#0f2c4a]"
+                  />
+                  <span>{opt.label}</span>
+                </label>
+              ))}
+            </div>
+            <div className="mt-8 flex justify-center">
+              <button
+                onClick={openPrint}
+                className="rounded-full bg-[#daa520] px-10 py-3 text-sm font-bold text-black hover:opacity-90"
+              >PRINT</button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Share dialog */}
       <Dialog open={shareOpen} onOpenChange={setShareOpen}>
