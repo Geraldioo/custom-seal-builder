@@ -78,14 +78,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "Entrupy" },
+      { name: "description", content: "Certify Now generates unique digital certificates with scannable QR codes, linking directly to item details." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "Entrupy" },
+      { property: "og:description", content: "Certify Now generates unique digital certificates with scannable QR codes, linking directly to item details." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Entrupy" },
+      { name: "twitter:description", content: "Certify Now generates unique digital certificates with scannable QR codes, linking directly to item details." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/25b05b14-c3bd-4067-b449-8b86f87d889d/id-preview-9b76b283--021c56b8-f3c5-4ae3-b2c2-15c712f756fd.lovable.app-1781690653950.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/25b05b14-c3bd-4067-b449-8b86f87d889d/id-preview-9b76b283--021c56b8-f3c5-4ae3-b2c2-15c712f756fd.lovable.app-1781690653950.png" },
     ],
     links: [
       {
