@@ -427,6 +427,103 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
+function MobilePrintCertificate({ cert }: { cert: Certificate }) {
+  const [qrUrl, setQrUrl] = useState<string>("");
+  const certUrl = `https://entrupy.vip/${cert.code}`;
+  const issuedAt = formatIssuedAt(cert.issued_at);
+  const mainImg = cert.images[0];
+
+  useEffect(() => {
+    generateQrWithLogo(certUrl, 400).then(setQrUrl).catch(() => {});
+  }, [certUrl]);
+
+  useEffect(() => {
+    const prevTitle = document.title;
+    document.title = cert.code;
+    const t = setTimeout(() => { try { window.print(); } catch {} }, 1200);
+    return () => { clearTimeout(t); document.title = prevTitle; };
+  }, [cert.code, qrUrl]);
+
+  return (
+    <div className="min-h-screen bg-white">
+      <style>{`
+        @page { size: 105mm 170mm; margin: 4mm; }
+        @media print { body { background: white !important; } }
+      `}</style>
+      <div className="mx-auto max-w-[440px] p-2">
+        <div className="relative rounded-[14px] border-[8px] border-[#daa520] bg-[#f4f3ef]">
+          <div className="absolute inset-0 overflow-hidden rounded-[6px]">
+            <CertBackground code={cert.code} />
+          </div>
+          <div className="relative m-1 rounded-[8px] border border-[#daa520]/70">
+            <div className="relative p-4">
+              {/* Header */}
+              <div className="flex items-start justify-between">
+                <img src={entrupyLogo.url} alt="entrupy" className="h-9 object-contain" />
+                <img src={verifiedSeal.url} alt="Verified" className="h-12 w-12 rounded-full object-cover" />
+              </div>
+              <h1
+                className="mt-4 text-[22px] leading-[1.05]"
+                style={{ fontFamily: "'Oswald', 'Helvetica Neue', Arial, sans-serif", fontWeight: 700, letterSpacing: "0.01em" }}
+              >
+                CERTIFICATE OF AUTHENTICITY
+              </h1>
+
+              {/* Fields 2-col */}
+              <div className="mt-5 grid grid-cols-2 gap-x-5 gap-y-4 text-[12px]">
+                <MPField label="Certificate Holder" value={cert.holder} />
+                <MPField label="Brand" value={cert.brand} />
+                <MPField label="Material" value={cert.material} />
+                <MPField label="Identifier" value={cert.identifier} />
+                <div className="col-span-2">
+                  <MPField label="Certificate Issued At" value={issuedAt} />
+                </div>
+              </div>
+
+              {/* Image + QR */}
+              <div className="mt-5 grid grid-cols-2 gap-3">
+                <div className="@container aspect-square overflow-hidden rounded-lg bg-neutral-200">
+                  {mainImg ? (
+                    <div className="relative h-full w-full">
+                      <img src={mainImg} alt="product" className="h-full w-full object-cover" />
+                      <div
+                        className="pointer-events-none absolute inset-x-0 bottom-[6%] text-center text-white/55"
+                        style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontWeight: 100, letterSpacing: "0.06em", fontSize: "12cqw", lineHeight: 1, textShadow: "0 1px 2px rgba(0,0,0,0.25)" }}
+                      >
+                        {cert.code}
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
+                <div className="aspect-square overflow-hidden rounded-lg bg-white">
+                  {qrUrl ? (
+                    <img src={qrUrl} alt="QR" className="h-full w-full object-contain" />
+                  ) : (
+                    <div className="h-full w-full animate-pulse bg-neutral-200" />
+                  )}
+                </div>
+              </div>
+
+              <p className="mt-4 text-center text-[11px] leading-snug text-neutral-800">
+                Scan the QR code to verify the<br />authenticity of the certificate.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MPField({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <div className="text-[10px] text-neutral-500">{label}</div>
+      <div className="mt-1 text-[13px] font-bold text-neutral-900 break-words">{value}</div>
+    </div>
+  );
+}
+
 function formatIssuedAt(iso: string): string {
   const d = new Date(iso);
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
