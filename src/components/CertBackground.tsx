@@ -11,14 +11,15 @@ export function CertBackground({ code, className = "" }: { code: string; classNa
       className={`absolute inset-0 pointer-events-none overflow-hidden ${className}`}
       style={{
         fontFamily: "Oswald, 'Helvetica Neue', Arial, sans-serif",
-        fontWeight: 700,
-        fontSize: "11px",
-        lineHeight: "13px",
+        fontWeight: 800,
+        fontSize: "13px",
+        lineHeight: "15px",
         letterSpacing: "0.5px",
         color: "#000",
-        opacity: 0.09,
+        opacity: 0.11,
         whiteSpace: "nowrap",
         userSelect: "none",
+        WebkitTextStroke: "0.3px #000",
       }}
     >
       {lines.map((_, i) => (
