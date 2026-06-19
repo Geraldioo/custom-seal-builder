@@ -132,24 +132,28 @@ function Certificate({ cert }: { cert: Certificate }) {
     <div className="min-h-screen bg-white">
       {isPrintable && (
         <style>{`
-          @page { size: ${pageSizeCss}; margin: 6mm; }
+          @page { size: ${pageSizeCss}; margin: 0; }
           @media print {
-            body { background: white !important; }
+            html, body { background: white !important; margin: 0 !important; padding: 0 !important; }
             .no-print { display: none !important; }
+            .print-page { width: 100vw; min-height: 100vh; }
           }
+          .print-page { width: 100vw; min-height: 100vh; box-sizing: border-box; padding: 4mm; }
+          .print-card { min-height: calc(100vh - 8mm); display: flex; flex-direction: column; }
+          .print-card > .print-inner { flex: 1; display: flex; flex-direction: column; }
         `}</style>
       )}
 
       {/* Outer gold border frame — squared corners */}
-      <div className={`mx-auto ${containerMaxW} ${isPrintable ? "p-0" : "px-3 py-4 md:px-6 md:py-8"}`}>
-        <div className={`relative border-[#daa520] bg-[#f4f3ef] ${isPrintable ? "border-[8px]" : "border-[10px] md:border-[14px]"}`}>
+      <div className={`mx-auto ${containerMaxW} ${isPrintable ? "print-page" : "px-3 py-4 md:px-6 md:py-8"}`}>
+        <div className={`relative border-[#daa520] bg-[#f4f3ef] ${isPrintable ? "border-[8px] print-card" : "border-[10px] md:border-[14px]"}`}>
           {/* watermark */}
           <div className="absolute inset-0 overflow-hidden">
             <CertBackground code={cert.code} />
           </div>
           {/* inner thin border */}
-          <div className="relative m-1.5 border-2 border-[#daa520]/80 md:m-2">
-            <div className="relative p-4 md:p-8">
+          <div className={`relative m-1.5 border-2 border-[#daa520]/80 md:m-2 ${isPrintable ? "print-inner" : ""}`}>
+            <div className={`relative p-4 md:p-8 ${isPrintable ? "flex-1 flex flex-col" : ""}`}>
 
               {/* Header */}
               <div className="relative z-10">
@@ -247,7 +251,7 @@ function Certificate({ cert }: { cert: Certificate }) {
               </div>
 
               {/* Notices + QR */}
-              <div className={`relative z-10 mt-6 ${footerGridCls}`}>
+              <div className={`relative z-10 mt-6 ${footerGridCls} ${isPrintable ? "mt-auto pt-8" : ""}`}>
                 <div className="space-y-3 text-[11px] leading-snug text-neutral-800 md:text-xs">
                   <p>
                     Entrupy provides a financial guarantee for this certificate. For more information, visit{" "}

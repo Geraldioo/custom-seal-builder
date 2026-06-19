@@ -3,8 +3,8 @@
  * so web fonts (Oswald) actually apply (SVG background-image can't load web fonts).
  */
 export function CertBackground({ code, className = "" }: { code: string; className?: string }) {
-  const line = `${code} `.repeat(40);
-  const lines = Array.from({ length: 110 });
+  const line = `${code}\u00A0`.repeat(120);
+  const lines = Array.from({ length: 140 });
   return (
     <div
       aria-hidden
