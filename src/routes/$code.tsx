@@ -227,7 +227,7 @@ function Certificate({ cert }: { cert: Certificate }) {
                 <div className="space-y-3 text-sm md:text-[15px]">
                   <Field label="Certificate Holder">
                     <span className="font-bold">{cert.holder}</span>
-                    <span className="ml-2 inline-flex h-4 w-4 items-center justify-center rounded-full bg-[#daa520] text-[10px] font-bold text-white">✓</span>
+                    <img src={checkmarkBadge.url} alt="verified" className="ml-2 inline-block h-4 w-4 align-middle" />
                   </Field>
                   <Field label="Brand"><span className="font-bold">{cert.brand}</span></Field>
                   <Field label="Material"><span className="font-bold">{cert.material}</span></Field>
