@@ -141,8 +141,8 @@ function Certificate({ cert }: { cert: Certificate }) {
       )}
 
       {/* Outer gold border frame — squared corners */}
-      <div className={`mx-auto ${containerMaxW} px-3 py-4 md:px-6 md:py-8`}>
-        <div className="relative border-[10px] border-[#daa520] bg-[#f4f3ef] md:border-[14px]">
+      <div className={`mx-auto ${containerMaxW} ${isPrintable ? "p-0" : "px-3 py-4 md:px-6 md:py-8"}`}>
+        <div className={`relative border-[#daa520] bg-[#f4f3ef] ${isPrintable ? "border-[8px]" : "border-[10px] md:border-[14px]"}`}>
           {/* watermark */}
           <div className="absolute inset-0 overflow-hidden">
             <CertBackground code={cert.code} />
