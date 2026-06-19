@@ -8,6 +8,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Facebook, Twitter, Linkedin, Search, Info } from "lucide-react";
 import entrupyLogo from "@/assets/entrupy-text.png.asset.json";
 import verifiedSeal from "@/assets/verified-seal-new.png.asset.json";
+import checkmarkBadge from "@/assets/checkmark-badge.png.asset.json";
 
 type PrintSize = "a4" | "letter" | "mobile";
 
@@ -140,8 +141,8 @@ function Certificate({ cert }: { cert: Certificate }) {
       )}
 
       {/* Outer gold border frame — squared corners */}
-      <div className={`mx-auto ${containerMaxW} px-3 py-4 md:px-6 md:py-8`}>
-        <div className="relative border-[10px] border-[#daa520] bg-[#f4f3ef] md:border-[14px]">
+      <div className={`mx-auto ${containerMaxW} ${isPrintable ? "p-0" : "px-3 py-4 md:px-6 md:py-8"}`}>
+        <div className={`relative border-[#daa520] bg-[#f4f3ef] ${isPrintable ? "border-[8px]" : "border-[10px] md:border-[14px]"}`}>
           {/* watermark */}
           <div className="absolute inset-0 overflow-hidden">
             <CertBackground code={cert.code} />
@@ -226,7 +227,7 @@ function Certificate({ cert }: { cert: Certificate }) {
                 <div className="space-y-3 text-sm md:text-[15px]">
                   <Field label="Certificate Holder">
                     <span className="font-bold">{cert.holder}</span>
-                    <span className="ml-2 inline-flex h-4 w-4 items-center justify-center rounded-full bg-[#daa520] text-[10px] font-bold text-white">✓</span>
+                    <img src={checkmarkBadge.url} alt="verified" className="ml-2 inline-block h-4 w-4 align-middle" />
                   </Field>
                   <Field label="Brand"><span className="font-bold">{cert.brand}</span></Field>
                   <Field label="Material"><span className="font-bold">{cert.material}</span></Field>

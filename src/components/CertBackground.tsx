@@ -4,25 +4,25 @@
  */
 export function CertBackground({ code, className = "" }: { code: string; className?: string }) {
   const line = `${code} `.repeat(40);
-  const lines = Array.from({ length: 80 });
+  const lines = Array.from({ length: 110 });
   return (
     <div
       aria-hidden
       className={`absolute inset-0 pointer-events-none overflow-hidden ${className}`}
       style={{
-        fontFamily: "'Courier New', 'Roboto Mono', ui-monospace, monospace",
-        fontWeight: 600,
+        fontFamily: "Arial, 'Helvetica Neue', Helvetica, sans-serif",
+        fontWeight: 700,
         fontSize: "13px",
-        lineHeight: "15px",
-        letterSpacing: "1px",
-        color: "#9ca3af",
-        opacity: 0.45,
+        lineHeight: "13px",
+        letterSpacing: "0px",
+        color: "#d9d9d9",
+        opacity: 1,
         whiteSpace: "nowrap",
         userSelect: "none",
       }}
     >
       {lines.map((_, i) => (
-        <div key={i}>{line}</div>
+        <div key={i} style={{ margin: 0, padding: 0 }}>{line}</div>
       ))}
     </div>
   );
