@@ -251,7 +251,7 @@ function Certificate({ cert }: { cert: Certificate }) {
               </div>
 
               {/* Notices + QR */}
-              <div className={`relative z-10 mt-6 ${footerGridCls}`}>
+              <div className={`relative z-10 mt-6 ${footerGridCls} ${isPrintable ? "mt-auto pt-8" : ""}`}>
                 <div className="space-y-3 text-[11px] leading-snug text-neutral-800 md:text-xs">
                   <p>
                     Entrupy provides a financial guarantee for this certificate. For more information, visit{" "}
