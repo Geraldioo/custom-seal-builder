@@ -152,8 +152,8 @@ function Certificate({ cert }: { cert: Certificate }) {
             <CertBackground code={cert.code} />
           </div>
           {/* inner thin border */}
-          <div className="relative m-1.5 border-2 border-[#daa520]/80 md:m-2">
-            <div className="relative p-4 md:p-8">
+          <div className={`relative m-1.5 border-2 border-[#daa520]/80 md:m-2 ${isPrintable ? "print-inner" : ""}`}>
+            <div className={`relative p-4 md:p-8 ${isPrintable ? "flex-1 flex flex-col" : ""}`}>
 
               {/* Header */}
               <div className="relative z-10">
