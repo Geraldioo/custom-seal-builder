@@ -8,6 +8,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Facebook, Twitter, Linkedin, Search, Info } from "lucide-react";
 import entrupyLogo from "@/assets/entrupy-text.png.asset.json";
 import verifiedSeal from "@/assets/verified-seal-new.png.asset.json";
+import checkmarkBadge from "@/assets/checkmark-badge.png.asset.json";
 
 type PrintSize = "a4" | "letter" | "mobile";
 
