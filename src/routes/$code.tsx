@@ -132,17 +132,21 @@ function Certificate({ cert }: { cert: Certificate }) {
     <div className="min-h-screen bg-white">
       {isPrintable && (
         <style>{`
-          @page { size: ${pageSizeCss}; margin: 6mm; }
+          @page { size: ${pageSizeCss}; margin: 0; }
           @media print {
-            body { background: white !important; }
+            html, body { background: white !important; margin: 0 !important; padding: 0 !important; }
             .no-print { display: none !important; }
+            .print-page { width: 100vw; min-height: 100vh; }
           }
+          .print-page { width: 100vw; min-height: 100vh; box-sizing: border-box; padding: 4mm; }
+          .print-card { min-height: calc(100vh - 8mm); display: flex; flex-direction: column; }
+          .print-card > .print-inner { flex: 1; display: flex; flex-direction: column; }
         `}</style>
       )}
 
       {/* Outer gold border frame — squared corners */}
-      <div className={`mx-auto ${containerMaxW} ${isPrintable ? "p-0" : "px-3 py-4 md:px-6 md:py-8"}`}>
-        <div className={`relative border-[#daa520] bg-[#f4f3ef] ${isPrintable ? "border-[8px]" : "border-[10px] md:border-[14px]"}`}>
+      <div className={`mx-auto ${containerMaxW} ${isPrintable ? "print-page" : "px-3 py-4 md:px-6 md:py-8"}`}>
+        <div className={`relative border-[#daa520] bg-[#f4f3ef] ${isPrintable ? "border-[8px] print-card" : "border-[10px] md:border-[14px]"}`}>
           {/* watermark */}
           <div className="absolute inset-0 overflow-hidden">
             <CertBackground code={cert.code} />
