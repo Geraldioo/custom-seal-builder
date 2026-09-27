@@ -454,6 +454,13 @@ function MobilePrintCertificate({ cert }: { cert: Certificate }) {
       <style>{`
         @page { size: 105mm 170mm; margin: 4mm; }
         @media print { body { background: white !important; } }
+        .mp-title-row { display: flex; flex-wrap: nowrap; align-items: center; justify-content: space-between; gap: 12px; container-type: inline-size; }
+        .mp-title { white-space: nowrap; min-width: 0; flex: 1 1 auto; font-size: clamp(16px, 8.2cqw, 32px); }
+        @media print and (max-width: 767px) {
+          .mp-title-row { display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; }
+          .mp-title { white-space: nowrap !important; font-size: clamp(14px, 8.2cqw, 30px) !important; }
+          .mp-seal { flex-shrink: 0 !important; }
+        }
       `}</style>
       <div className="mx-auto max-w-[440px] p-2">
         <div className="relative rounded-[14px] border-[8px] border-[#daa520] bg-[#f4f3ef]">
@@ -464,14 +471,14 @@ function MobilePrintCertificate({ cert }: { cert: Certificate }) {
             <div className="relative p-4">
               {/* Header */}
               <img src={entrupyLogo.url} alt="entrupy" className="mt-2 h-9 object-contain" />
-              <div className="mt-3 flex items-center justify-between gap-6">
+              <div className="mp-title-row mt-3">
                 <h1
-                  className="text-[32px] leading-[1]"
+                  className="mp-title leading-[1]"
                   style={{ fontFamily: "'Bebas Neue', 'Oswald', Arial, sans-serif", fontWeight: 400, letterSpacing: "0.02em" }}
                 >
                   CERTIFICATE OF AUTHENTICITY
                 </h1>
-                <img src={verifiedSeal.url} alt="Verified" className="h-14 w-14 shrink-0 rounded-full object-cover" />
+                <img src={verifiedSeal.url} alt="Verified" className="mp-seal h-14 w-14 shrink-0 rounded-full object-cover" />
               </div>
 
               {/* Fields 2-col */}
