@@ -156,7 +156,7 @@ function Certificate({ cert }: { cert: Certificate }) {
             <div className={`relative p-4 md:p-8 ${isPrintable ? "flex-1 flex flex-col" : ""}`}>
 
               {/* Header */}
-              <div className="relative z-10">
+              <div className="relative z-10 pt-3 md:pt-5">
                 {/* Mobile-style: logo + seal one row, title centered below */}
                 <div className={`flex items-center justify-between ${mobileBlockCls}`}>
                   <img src={entrupyLogo.url} alt="entrupy" className="h-12 object-contain" />
@@ -167,7 +167,7 @@ function Certificate({ cert }: { cert: Certificate }) {
                   />
                 </div>
                 <h1
-                  className={`mt-4 text-center text-[30px] leading-none ${titleMobileCls}`}
+                  className={`mt-5 text-center text-[42px] leading-none ${titleMobileCls}`}
                   style={{ fontFamily: "'Bebas Neue', 'Oswald', Arial, sans-serif", fontWeight: 400, letterSpacing: "0.02em" }}
                 >
                   CERTIFICATE OF AUTHENTICITY
@@ -177,7 +177,7 @@ function Certificate({ cert }: { cert: Certificate }) {
                 <div className={desktopFlexCls}>
                   <img src={entrupyLogo.url} alt="entrupy" className="h-20 object-contain" />
                   <h1
-                    className="text-center text-[34px] tracking-tight"
+                    className="flex-1 px-8 text-center text-[56px] leading-none"
                     style={{ fontFamily: "'Bebas Neue', 'Oswald', Arial, sans-serif", fontWeight: 400, letterSpacing: "0.02em" }}
                   >
                     CERTIFICATE OF AUTHENTICITY
@@ -463,16 +463,16 @@ function MobilePrintCertificate({ cert }: { cert: Certificate }) {
           <div className="relative m-1 rounded-[8px] border border-[#daa520]/70">
             <div className="relative p-4">
               {/* Header */}
-              <div className="flex items-start justify-between">
-                <img src={entrupyLogo.url} alt="entrupy" className="h-9 object-contain" />
-                <img src={verifiedSeal.url} alt="Verified" className="h-12 w-12 rounded-full object-cover" />
+              <img src={entrupyLogo.url} alt="entrupy" className="mt-2 h-9 object-contain" />
+              <div className="mt-3 flex items-center justify-between gap-6">
+                <h1
+                  className="text-[32px] leading-[1]"
+                  style={{ fontFamily: "'Bebas Neue', 'Oswald', Arial, sans-serif", fontWeight: 400, letterSpacing: "0.02em" }}
+                >
+                  CERTIFICATE OF AUTHENTICITY
+                </h1>
+                <img src={verifiedSeal.url} alt="Verified" className="h-14 w-14 shrink-0 rounded-full object-cover" />
               </div>
-              <h1
-                className="mt-4 text-[22px] leading-[1.05]"
-                style={{ fontFamily: "'Bebas Neue', 'Oswald', Arial, sans-serif", fontWeight: 400, letterSpacing: "0.02em" }}
-              >
-                CERTIFICATE OF AUTHENTICITY
-              </h1>
 
               {/* Fields 2-col */}
               <div className="mt-5 grid grid-cols-2 gap-x-5 gap-y-4 text-[12px]">
