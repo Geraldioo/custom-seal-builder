@@ -177,7 +177,7 @@ function Certificate({ cert }: { cert: Certificate }) {
                 <div className={desktopFlexCls}>
                   <img src={entrupyLogo.url} alt="entrupy" className="h-20 object-contain" />
                   <h1
-                    className="flex-1 px-8 text-center text-[56px] leading-none"
+                    className="flex-1 whitespace-nowrap px-8 text-center text-[48px] leading-none"
                     style={{ fontFamily: "'Bebas Neue', 'Oswald', Arial, sans-serif", fontWeight: 400, letterSpacing: "0.02em" }}
                   >
                     CERTIFICATE OF AUTHENTICITY
