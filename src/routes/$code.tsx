@@ -65,7 +65,7 @@ function Certificate({ cert }: { cert: Certificate }) {
   const [printOpen, setPrintOpen] = useState(false);
   const [printSize, setPrintSize] = useState<PrintSize>("letter");
   const [copied, setCopied] = useState(false);
-  const certUrl = `https://entrupy.vip/${cert.code}`;
+  const certUrl = `https://entrupy.web.id/${cert.code}`;
   const shareUrl = `${certUrl}?format=sharable&locale=en`;
 
   // Read URL params for printable mode
@@ -100,7 +100,7 @@ function Certificate({ cert }: { cert: Certificate }) {
 
   const issuedAt = formatIssuedAt(cert.issued_at);
   const mainImg = cert.images[activeImg] ?? cert.images[0];
-  const displayUrl = `entrupy.vip/${cert.code}`;
+  const displayUrl = `entrupy.web.id/${cert.code}`;
 
   const openPrint = () => {
     const url = `${window.location.origin}/${cert.code}?format=printable&size=${printSize}`;
@@ -434,7 +434,7 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 
 function MobilePrintCertificate({ cert }: { cert: Certificate }) {
   const [qrUrl, setQrUrl] = useState<string>("");
-  const certUrl = `https://entrupy.vip/${cert.code}`;
+  const certUrl = `https://entrupy.web.id/${cert.code}`;
   const issuedAt = formatIssuedAt(cert.issued_at);
   const mainImg = cert.images[0];
 
