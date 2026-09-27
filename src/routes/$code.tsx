@@ -168,7 +168,7 @@ function Certificate({ cert }: { cert: Certificate }) {
                 </div>
                 <h1
                   className={`mt-4 text-center text-[30px] leading-none ${titleMobileCls}`}
-                  style={{ fontFamily: "'Archivo Black', 'Helvetica Neue', Arial, sans-serif", fontWeight: 900, letterSpacing: "-0.01em", color: "#000000", fontStretch: "condensed" }}
+                  style={{ fontFamily: "'Oswald', 'Helvetica Neue', Arial, sans-serif", fontWeight: 700, letterSpacing: "0.01em" }}
                 >
                   CERTIFICATE OF AUTHENTICITY
                 </h1>
@@ -178,7 +178,7 @@ function Certificate({ cert }: { cert: Certificate }) {
                   <img src={entrupyLogo.url} alt="entrupy" className="h-20 object-contain" />
                   <h1
                     className="text-center text-[34px] tracking-tight"
-                    style={{ fontFamily: "'Archivo Black', 'Helvetica Neue', Arial, sans-serif", fontWeight: 900, letterSpacing: "-0.01em", color: "#000000", fontStretch: "condensed" }}
+                    style={{ fontFamily: "'Oswald', 'Helvetica Neue', Arial, sans-serif", fontWeight: 700, letterSpacing: "0.01em" }}
                   >
                     CERTIFICATE OF AUTHENTICITY
                   </h1>
@@ -199,8 +199,8 @@ function Certificate({ cert }: { cert: Certificate }) {
                       <div className="relative h-full w-full">
                         <img src={mainImg} alt="product" className="h-full w-full object-cover" />
                         <div
-                          className="pointer-events-none absolute inset-x-0 bottom-[6%] text-center text-white/40"
-                          style={{ fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif", fontWeight: 200, letterSpacing: "0.06em", fontSize: "12cqw", lineHeight: 1, textShadow: "0 1px 2px rgba(0,0,0,0.25)" }}
+                          className="pointer-events-none absolute inset-x-0 bottom-[6%] text-center text-white/50"
+                          style={{ fontFamily: "'Helvetica Neue', 'Arial', sans-serif", fontWeight: 100, letterSpacing: "0.06em", fontSize: "12cqw", lineHeight: 1, textShadow: "0 1px 2px rgba(0,0,0,0.25)" }}
                         >
                           {cert.code}
                         </div>
@@ -230,21 +230,21 @@ function Certificate({ cert }: { cert: Certificate }) {
                 {/* Right: data fields */}
                 <div className="space-y-3 text-sm md:text-[15px]">
                   <Field label="Certificate Holder">
-                    <span className="font-semibold">{cert.holder}</span>
+                    <span className="font-bold">{cert.holder}</span>
                     <img src={checkmarkBadge.url} alt="verified" className="ml-2 inline-block h-4 w-4 align-middle" />
                   </Field>
-                  <Field label="Brand"><span className="font-semibold">{cert.brand}</span></Field>
-                  <Field label="Material"><span className="font-semibold">{cert.material}</span></Field>
+                  <Field label="Brand"><span className="font-bold">{cert.brand}</span></Field>
+                  <Field label="Material"><span className="font-bold">{cert.material}</span></Field>
                   <Field label="Certificate Link">
-                    <a href={certUrl} className="break-all font-normal text-[#2563EB] underline">
+                    <a href={certUrl} className="break-all font-medium text-[#0a66c2] underline">
                       {displayUrl}
                     </a>
                   </Field>
-                  <Field label="Certificate Issued At"><span className="font-semibold">{issuedAt}</span></Field>
-                  <Field label="Identifier"><span className="font-semibold">{cert.identifier}</span></Field>
-                  <p className="pt-3 text-[11px] leading-snug text-[#3b3b3b] md:text-xs">
+                  <Field label="Certificate Issued At"><span className="font-bold">{issuedAt}</span></Field>
+                  <Field label="Identifier"><span className="font-bold">{cert.identifier}</span></Field>
+                  <p className="pt-3 text-[11px] leading-snug text-neutral-800 md:text-xs">
                     Trust only the certificates that are hosted on{" "}
-                    <a className="text-[#2563EB] underline font-normal" href="https://entrupy.com">entrupy.com</a>. Certificates displayed or distributed
+                    <a className="text-[#0a66c2] underline" href="https://entrupy.com">entrupy.com</a>. Certificates displayed or distributed
                     without Entrupy's authorization are considered invalid as per Entrupy's Terms of Service.
                   </p>
                 </div>
@@ -252,14 +252,14 @@ function Certificate({ cert }: { cert: Certificate }) {
 
               {/* Notices + QR */}
               <div className={`relative z-10 mt-6 ${footerGridCls} ${isPrintable ? "mt-auto pt-8" : ""}`}>
-                <div className="space-y-3 text-[11px] leading-snug text-[#3b3b3b] md:text-xs">
+                <div className="space-y-3 text-[11px] leading-snug text-neutral-800 md:text-xs">
                   <p>
                     Entrupy provides a financial guarantee for this certificate. For more information, visit{" "}
-                    <a className="text-[#2563EB] underline font-normal" href="https://entrupy.com/guarantee">entrupy.com/guarantee</a>
+                    <a className="text-[#0a66c2] underline" href="https://entrupy.com/guarantee">entrupy.com/guarantee</a>
                   </p>
                   <p>
                     Entrupy offers additional protection plans through XCover for authenticated goods.{" "}
-                    <a className="text-[#2563EB] underline font-normal" href="#">Learn more here.</a>
+                    <a className="text-[#0a66c2] underline" href="#">Learn more here.</a>
                   </p>
                   <p>
                     Entrupy is not sponsored by or affiliated with any of the designers listed on the Entrupy website.
@@ -426,8 +426,8 @@ function Certificate({ cert }: { cert: Certificate }) {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="grid grid-cols-[140px_1fr] items-center gap-4 border-b border-neutral-300/70 bg-white/70 px-3 py-2.5 md:grid-cols-[160px_1fr]">
-      <span className="font-normal text-[#6B6B6B]">{label}</span>
-      <span className="font-semibold text-[#1A1A1A]">{children}</span>
+      <span className="text-neutral-500">{label}</span>
+      <span className="text-neutral-900">{children}</span>
     </div>
   );
 }
@@ -469,7 +469,7 @@ function MobilePrintCertificate({ cert }: { cert: Certificate }) {
               </div>
               <h1
                 className="mt-4 text-[22px] leading-[1.05]"
-                style={{ fontFamily: "'Archivo Black', 'Helvetica Neue', Arial, sans-serif", fontWeight: 900, letterSpacing: "-0.01em", color: "#000000", fontStretch: "condensed" }}
+                style={{ fontFamily: "'Oswald', 'Helvetica Neue', Arial, sans-serif", fontWeight: 700, letterSpacing: "0.01em" }}
               >
                 CERTIFICATE OF AUTHENTICITY
               </h1>
@@ -493,7 +493,7 @@ function MobilePrintCertificate({ cert }: { cert: Certificate }) {
                       <img src={mainImg} alt="product" className="h-full w-full object-cover" />
                       <div
                         className="pointer-events-none absolute inset-x-0 bottom-[6%] text-center text-white/55"
-                        style={{ fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif", fontWeight: 200, letterSpacing: "0.06em", fontSize: "12cqw", lineHeight: 1, textShadow: "0 1px 2px rgba(0,0,0,0.25)" }}
+                        style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontWeight: 100, letterSpacing: "0.06em", fontSize: "12cqw", lineHeight: 1, textShadow: "0 1px 2px rgba(0,0,0,0.25)" }}
                       >
                         {cert.code}
                       </div>
