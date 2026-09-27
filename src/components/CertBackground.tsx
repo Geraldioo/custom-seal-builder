@@ -10,9 +10,9 @@ export function CertBackground({ code, className = "" }: { code: string; classNa
       aria-hidden
       className={`absolute inset-0 pointer-events-none overflow-hidden ${className}`}
       style={{
-        fontFamily: "'Oswald', 'Arial Narrow', sans-serif",
+        fontFamily: "'Helvetica Neue', Arial, sans-serif",
         fontWeight: 600,
-        fontSize: "12px",
+        fontSize: "13px",
         lineHeight: "12px",
         letterSpacing: "0px",
         color: "#000",
