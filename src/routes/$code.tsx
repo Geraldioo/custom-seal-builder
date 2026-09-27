@@ -110,7 +110,7 @@ function Certificate({ cert }: { cert: Certificate }) {
 
   // Layout class helpers
   const mobileBlockCls = forced ? (wantMobile ? "" : "hidden") : "md:hidden";
-  const desktopFlexCls = forced ? (wantMobile ? "hidden" : "flex items-center justify-between gap-4") : "hidden md:flex md:items-center md:justify-between md:gap-4";
+  const desktopFlexCls = forced ? (wantMobile ? "hidden" : "flex items-center justify-between gap-8") : "hidden md:flex md:items-center md:justify-between md:gap-8";
   const bodyGridCls = forced
     ? (wantMobile ? "grid grid-cols-1 gap-6" : "grid grid-cols-[minmax(0,300px)_minmax(0,1fr)] gap-10")
     : "grid grid-cols-1 gap-6 md:grid-cols-[minmax(0,300px)_minmax(0,1fr)] md:gap-10";
