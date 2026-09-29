@@ -200,7 +200,7 @@ function Certificate({ cert }: { cert: Certificate }) {
                         <img src={mainImg} alt="product" className="h-full w-full object-cover" />
                         <div
                           className="pointer-events-none absolute inset-x-0 bottom-[6%] text-center text-white/50"
-                          style={{ fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif", fontWeight: 100, letterSpacing: "0.06em", fontSize: "12cqw", lineHeight: 1, textShadow: "0 1px 2px rgba(0,0,0,0.25)" }}
+                          style={{ fontFamily: "'Helvetica Neue', 'Arial', sans-serif", fontWeight: 100, letterSpacing: "0.06em", fontSize: "12cqw", lineHeight: 1, textShadow: "0 1px 2px rgba(0,0,0,0.25)" }}
                         >
                           {cert.code}
                         </div>
@@ -500,7 +500,7 @@ function MobilePrintCertificate({ cert }: { cert: Certificate }) {
                       <img src={mainImg} alt="product" className="h-full w-full object-cover" />
                       <div
                         className="pointer-events-none absolute inset-x-0 bottom-[6%] text-center text-white/55"
-                        style={{ fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif", fontWeight: 100, letterSpacing: "0.06em", fontSize: "12cqw", lineHeight: 1, textShadow: "0 1px 2px rgba(0,0,0,0.25)" }}
+                        style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontWeight: 100, letterSpacing: "0.06em", fontSize: "12cqw", lineHeight: 1, textShadow: "0 1px 2px rgba(0,0,0,0.25)" }}
                       >
                         {cert.code}
                       </div>
