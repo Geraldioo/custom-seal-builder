@@ -199,7 +199,7 @@ function Certificate({ cert }: { cert: Certificate }) {
                       <div className="relative h-full w-full">
                         <img src={mainImg} alt="product" className="h-full w-full object-cover" />
                         <div
-                          className="pointer-events-none absolute inset-x-0 bottom-[6%] text-center text-white/50"
+                          className="photo-code pointer-events-none absolute inset-x-0 bottom-[6%] text-center text-white/50"
                           style={{ fontFamily: "'Arimo', Arial, sans-serif", fontWeight: 100, letterSpacing: "0.06em", fontSize: "12cqw", lineHeight: 1, textShadow: "0 1px 2px rgba(0,0,0,0.25)" }}
                         >
                           {cert.code}
@@ -499,7 +499,7 @@ function MobilePrintCertificate({ cert }: { cert: Certificate }) {
                     <div className="relative h-full w-full">
                       <img src={mainImg} alt="product" className="h-full w-full object-cover" />
                       <div
-                        className="pointer-events-none absolute inset-x-0 bottom-[6%] text-center text-white/55"
+                        className="photo-code pointer-events-none absolute inset-x-0 bottom-[6%] text-center text-white/55"
                         style={{ fontFamily: "'Arimo', Arial, sans-serif", fontWeight: 100, letterSpacing: "0.06em", fontSize: "12cqw", lineHeight: 1, textShadow: "0 1px 2px rgba(0,0,0,0.25)" }}
                       >
                         {cert.code}
